@@ -16,6 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf.urls import include, url
+from rest_framework.routers import DefaultRouter
+from apps.fhir import views
+
+router = DefaultRouter()
+router.register(prefix=r'fhir/(?P<model>[-\w\d]+)', viewset=views.FHIRModelView, basename='fhir')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^', include(router.urls)),
 ]
